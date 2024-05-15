@@ -276,7 +276,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"VRFv2DirectFundingConsumer.sol": "StekcitBM"
+			"StekcitBM.sol": "StekcitBM"
 		},
 		"evmVersion": "london",
 		"libraries": {},
@@ -338,7 +338,7 @@
 				"dweb:/ipfs/QmfScq3oJ6MkPXJh5JUrpz93bNMJ3ebtLcE3Q1H2DUNi93"
 			]
 		},
-		"VRFv2DirectFundingConsumer.sol": {
+		"StekcitBM.sol": {
 			"keccak256": "0x85ba9f08e57abbf4c294f522ce8d614f9f80a7e5a0326490eb134adb10de215f",
 			"license": "MIT",
 			"urls": [
