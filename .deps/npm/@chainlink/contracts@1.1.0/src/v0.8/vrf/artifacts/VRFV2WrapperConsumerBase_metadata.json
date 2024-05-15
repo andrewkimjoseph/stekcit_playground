@@ -1,0 +1,89 @@
+{
+	"compiler": {
+		"version": "0.8.19+commit.7dd6d404"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_requestId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "_randomWords",
+						"type": "uint256[]"
+					}
+				],
+				"name": "rawFulfillRandomWords",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"details": "PURPOSECreate VRF V2 requests without the need for subscription management. Rather than creatingand funding a VRF V2 subscription, a user can use this wrapper to create one off requests,paying up front rather than at fulfillment.Since the price is determined using the gas price of the request transaction rather thanthe fulfillment transaction, the wrapper charges an additional premium on callback gasusage, in addition to some extra overhead costs associated with the VRFV2Wrapper contract. *****************************************************************************USAGECalling contracts must inherit from VRFV2WrapperConsumerBase. The consumer must be fundedwith enough LINK to make the request, otherwise requests will revert. To request randomness,call the 'requestRandomness' function with the desired VRF parameters. This function handlespaying for the request based on the current pricing.Consumers must implement the fullfillRandomWords function, which will be called duringfulfillment with the randomness result.",
+			"kind": "dev",
+			"methods": {
+				"constructor": {
+					"params": {
+						"_link": "is the address of LinkToken",
+						"_vrfV2Wrapper": "is the address of the VRFV2Wrapper contract"
+					}
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"notice": "*******************************************************************************Interface for contracts using VRF randomness through the VRF V2 wrapper ********************************************************************************",
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			".deps/npm/@chainlink/contracts@1.1.0/src/v0.8/vrf/VRFV2WrapperConsumerBase.sol": "VRFV2WrapperConsumerBase"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		".deps/npm/@chainlink/contracts@1.1.0/src/v0.8/shared/interfaces/LinkTokenInterface.sol": {
+			"keccak256": "0xac02fbc0c7d194e525a71f524d1f7c472df73e19c2b527d7b529badaeaf0ec51",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://301fa881df623882941bdc7a807807df436c5c7da499fa1a4bbe490738109845",
+				"dweb:/ipfs/QmV2W4NYpe6uk4s34sCyrFJHfPEjYAkvHUposWkXrRNtbj"
+			]
+		},
+		".deps/npm/@chainlink/contracts@1.1.0/src/v0.8/vrf/VRFV2WrapperConsumerBase.sol": {
+			"keccak256": "0x97bc383acc97074b3b7d6f68da70dce617699f54e0ed1ddd0c83ec7f83a4f07f",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://09edfa8dc11decff67ccde43ccd803ed3cd3b9f020c69f2a4c5394591cd9b39f",
+				"dweb:/ipfs/QmUxFtDpXkYYQ6S2jDrnu9Md6F1guH4S14p5jt7pTDYUgv"
+			]
+		},
+		".deps/npm/@chainlink/contracts@1.1.0/src/v0.8/vrf/interfaces/VRFV2WrapperInterface.sol": {
+			"keccak256": "0x44f6fa0cb1867a0bc137a195d4603bafa1cf74ecfbe69eb82a5dabeca8957738",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://87ebb29c09566ab02ff62c3c29f60a08db52f032b5f2c5220cd111aad88002ce",
+				"dweb:/ipfs/QmfScq3oJ6MkPXJh5JUrpz93bNMJ3ebtLcE3Q1H2DUNi93"
+			]
+		}
+	},
+	"version": 1
+}

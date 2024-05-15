@@ -17,7 +17,7 @@ import {LinkTokenInterface} from "@chainlink/contracts@1.1.0/src/v0.8/shared/int
  * DO NOT USE THIS CODE IN PRODUCTION.
  */
 
-contract VRFv2DirectFundingConsumer is
+contract StekcitBM is
     VRFV2WrapperConsumerBase,
     ConfirmedOwner
 {
@@ -48,17 +48,17 @@ contract VRFv2DirectFundingConsumer is
     uint32 callbackGasLimit = 100000;
 
     // The default is 3, but you can set this higher.
-    uint16 requestConfirmations = 3;
+    uint16 requestConfirmations = 1;
 
     // For this example, retrieve 2 random values in one request.
     // Cannot exceed VRFV2Wrapper.getConfig().maxNumWords.
-    uint32 numWords = 2;
+    uint32 numWords = 1;
 
-    // Address LINK - hardcoded for Sepolia
-    address linkAddress = 0x779877A7B0D9E8603169DdbD7836e478b4624789;
+    // Address LINK - hardcoded for Avalanche Fuji
+    address linkAddress = 0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846;
 
-    // address WRAPPER - hardcoded for Sepolia
-    address wrapperAddress = 0xab18414CD93297B0d12ac29E63Ca20f515b3DB46;
+    // address WRAPPER - hardcoded for Avalance Fuji
+    address wrapperAddress = 0x9345AC54dA4D0B5Cda8CB749d8ef37e5F02BBb21;
 
     constructor()
         ConfirmedOwner(msg.sender)
@@ -123,3 +123,19 @@ contract VRFv2DirectFundingConsumer is
         );
     }
 }
+
+// Contract 1: 0x42ceA1f83480FCBA469BB5Fe49ABe198fBE1015b
+
+// Contract 2: 0xFfE54e5E49F8e602129b5a4c141aAC9273fcEBb3
+
+// Contract 3: 0x5110eE7e2e388Af6dbD44b2A14c337CE79cF8c75
+
+// Contract 4: 0xf40763B7081FA950E8bC044d0607aE9FCcB030d4
+
+// Contract 5: 0xE9CAd385927eB2Eae7698248313b0893Ea8138cD
+
+// Contract 6: 0x477EAAA2E155a95C2Fc57916a74CC1C1EdeDf200
+
+// Contract 7: 0xC7D3c668F6e9aABd1d1f1F0F19E2984798B608F8
+
+// Contract 8: 

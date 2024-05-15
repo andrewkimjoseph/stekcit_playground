@@ -276,7 +276,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"VRFv2DirectFundingConsumer.sol": "VRFv2DirectFundingConsumer"
+			"VRFv2DirectFundingConsumer.sol": "Stekcit"
 		},
 		"evmVersion": "london",
 		"libraries": {},
@@ -339,11 +339,11 @@
 			]
 		},
 		"VRFv2DirectFundingConsumer.sol": {
-			"keccak256": "0xc501e1a7389c2071572fbaf3332951874c3699d3aac8e3916e798ecc00f93703",
+			"keccak256": "0xae74f1114e000eb15d0d6d5423d401b490e78e78d54146ee0bd1e55e8511448d",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://842eef4d96870753d3f4a4807ef1d4d22cad80c716a89429edbf78ae2c321c2a",
-				"dweb:/ipfs/Qma1VBicQ5KBuwMNNdu3m2AKvFx6xWTzGuG9PUoDtdjNi2"
+				"bzz-raw://eab21b8d2c2a948595941cfa978e4fd5c8a884316e7985373ccf9fe196a7dd46",
+				"dweb:/ipfs/QmRqd8rxCvQgE9misKYWC23VUuED4tMDz78h41eticC5Xa"
 			]
 		}
 	},
