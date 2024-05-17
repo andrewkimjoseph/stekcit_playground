@@ -1,14 +1,56 @@
 {
 	"compiler": {
-		"version": "0.8.10+commit.fc410830"
+		"version": "0.8.19+commit.7dd6d404"
 	},
 	"language": "Solidity",
 	"output": {
 		"abi": [
 			{
-				"inputs": [],
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "router",
+						"type": "address"
+					}
+				],
 				"stateMutability": "nonpayable",
 				"type": "constructor"
+			},
+			{
+				"inputs": [],
+				"name": "EmptyArgs",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "EmptySecrets",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "EmptySource",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "NoInlineSecrets",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "OnlyRouterCanFulfill",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "requestId",
+						"type": "bytes32"
+					}
+				],
+				"name": "UnexpectedRequestID",
+				"type": "error"
 			},
 			{
 				"anonymous": false,
@@ -52,22 +94,10 @@
 				"anonymous": false,
 				"inputs": [
 					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "requestId",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256[]",
-						"name": "randomWords",
-						"type": "uint256[]"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "payment",
-						"type": "uint256"
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "id",
+						"type": "bytes32"
 					}
 				],
 				"name": "RequestFulfilled",
@@ -77,19 +107,38 @@
 				"anonymous": false,
 				"inputs": [
 					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "requestId",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint32",
-						"name": "numWords",
-						"type": "uint32"
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "id",
+						"type": "bytes32"
 					}
 				],
 				"name": "RequestSent",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "requestId",
+						"type": "bytes32"
+					},
+					{
+						"indexed": false,
+						"internalType": "bytes",
+						"name": "response",
+						"type": "bytes"
+					},
+					{
+						"indexed": false,
+						"internalType": "bytes",
+						"name": "err",
+						"type": "bytes"
+					}
+				],
+				"name": "Response",
 				"type": "event"
 			},
 			{
@@ -102,43 +151,24 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint256",
-						"name": "_requestId",
-						"type": "uint256"
-					}
-				],
-				"name": "getRequestStatus",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "paid",
-						"type": "uint256"
+						"internalType": "bytes32",
+						"name": "requestId",
+						"type": "bytes32"
 					},
 					{
-						"internalType": "bool",
-						"name": "fulfilled",
-						"type": "bool"
+						"internalType": "bytes",
+						"name": "response",
+						"type": "bytes"
 					},
 					{
-						"internalType": "uint256[]",
-						"name": "randomWords",
-						"type": "uint256[]"
+						"internalType": "bytes",
+						"name": "err",
+						"type": "bytes"
 					}
 				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "lastRequestId",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
+				"name": "handleOracleFulfillment",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -155,37 +185,13 @@
 				"type": "function"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "_requestId",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256[]",
-						"name": "_randomWords",
-						"type": "uint256[]"
-					}
-				],
-				"name": "rawFulfillRandomWords",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"name": "requestIds",
+				"inputs": [],
+				"name": "s_lastError",
 				"outputs": [
 					{
-						"internalType": "uint256",
+						"internalType": "bytes",
 						"name": "",
-						"type": "uint256"
+						"type": "bytes"
 					}
 				],
 				"stateMutability": "view",
@@ -193,12 +199,84 @@
 			},
 			{
 				"inputs": [],
-				"name": "requestRandomWords",
+				"name": "s_lastRequestId",
 				"outputs": [
 					{
-						"internalType": "uint256",
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "s_lastResponse",
+				"outputs": [
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "source",
+						"type": "string"
+					},
+					{
+						"internalType": "bytes",
+						"name": "encryptedSecretsUrls",
+						"type": "bytes"
+					},
+					{
+						"internalType": "uint8",
+						"name": "donHostedSecretsSlotID",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint64",
+						"name": "donHostedSecretsVersion",
+						"type": "uint64"
+					},
+					{
+						"internalType": "string[]",
+						"name": "args",
+						"type": "string[]"
+					},
+					{
+						"internalType": "bytes[]",
+						"name": "bytesArgs",
+						"type": "bytes[]"
+					},
+					{
+						"internalType": "uint64",
+						"name": "subscriptionId",
+						"type": "uint64"
+					},
+					{
+						"internalType": "uint32",
+						"name": "gasLimit",
+						"type": "uint32"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "donID",
+						"type": "bytes32"
+					}
+				],
+				"name": "sendRequest",
+				"outputs": [
+					{
+						"internalType": "bytes32",
 						"name": "requestId",
-						"type": "uint256"
+						"type": "bytes32"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -207,25 +285,35 @@
 			{
 				"inputs": [
 					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"name": "s_requests",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "paid",
-						"type": "uint256"
+						"internalType": "bytes",
+						"name": "request",
+						"type": "bytes"
 					},
 					{
-						"internalType": "bool",
-						"name": "fulfilled",
-						"type": "bool"
+						"internalType": "uint64",
+						"name": "subscriptionId",
+						"type": "uint64"
+					},
+					{
+						"internalType": "uint32",
+						"name": "gasLimit",
+						"type": "uint32"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "donID",
+						"type": "bytes32"
 					}
 				],
-				"stateMutability": "view",
+				"name": "sendRequestCBOR",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "requestId",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -240,18 +328,42 @@
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "withdrawLink",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
 			}
 		],
 		"devdoc": {
 			"kind": "dev",
-			"methods": {},
+			"methods": {
+				"handleOracleFulfillment(bytes32,bytes,bytes)": {
+					"details": "Either response or error parameter will be set, but never both.",
+					"params": {
+						"err": "Aggregated error either from the request's source code or from the execution pipeline.",
+						"requestId": "The requestId returned by FunctionsClient.sendRequest().",
+						"response": "Aggregated response from the request's source code."
+					}
+				},
+				"sendRequest(string,bytes,uint8,uint64,string[],bytes[],uint64,uint32,bytes32)": {
+					"params": {
+						"args": "List of arguments accessible from within the source code",
+						"bytesArgs": "Array of bytes arguments, represented as hex strings",
+						"donHostedSecretsSlotID": "Don hosted secrets slotId",
+						"donHostedSecretsVersion": "Don hosted secrets version",
+						"encryptedSecretsUrls": "Encrypted URLs where to fetch user secrets",
+						"source": "JavaScript source code",
+						"subscriptionId": "Billing ID"
+					}
+				},
+				"sendRequestCBOR(bytes,uint64,uint32,bytes32)": {
+					"params": {
+						"donID": "ID of the job to be invoked",
+						"gasLimit": "The maximum amount of gas the request can consume",
+						"request": "CBOR-encoded request data",
+						"subscriptionId": "Billing ID"
+					},
+					"returns": {
+						"requestId": "The ID of the sent request"
+					}
+				}
+			},
 			"version": 1
 		},
 		"userdoc": {
@@ -260,14 +372,20 @@
 				"acceptOwnership()": {
 					"notice": "Allows an ownership transfer to be completed by the recipient."
 				},
+				"handleOracleFulfillment(bytes32,bytes,bytes)": {
+					"notice": "Chainlink Functions response handler called by the Functions Router during fullilment from the designated transmitter node in an OCR round."
+				},
 				"owner()": {
 					"notice": "Get the current owner"
 				},
+				"sendRequest(string,bytes,uint8,uint64,string[],bytes[],uint64,uint32,bytes32)": {
+					"notice": "Send a simple request"
+				},
+				"sendRequestCBOR(bytes,uint64,uint32,bytes32)": {
+					"notice": "Send a pre-encoded CBOR request"
+				},
 				"transferOwnership(address)": {
 					"notice": "Allows an owner to begin transferring ownership to a new address."
-				},
-				"withdrawLink()": {
-					"notice": "Allow withdraw of Link tokens from the contract"
 				}
 			},
 			"notice": "THIS IS AN EXAMPLE CONTRACT THAT USES HARDCODED VALUES FOR CLARITY. THIS IS AN EXAMPLE CONTRACT THAT USES UN-AUDITED CODE. DO NOT USE THIS CODE IN PRODUCTION.",
@@ -276,9 +394,9 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"VRFv2DirectFundingConsumer.sol": "Stekcit"
+			"StekcitBMFunctions.sol": "Stekcit"
 		},
-		"evmVersion": "london",
+		"evmVersion": "paris",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -290,6 +408,46 @@
 		"remappings": []
 	},
 	"sources": {
+		"@chainlink/contracts@1.1.0/src/v0.8/functions/v1_0_0/FunctionsClient.sol": {
+			"keccak256": "0x40224641403cb9fa03d4f060296d7420a9ff11b46abadc958ae048459205e397",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://7d1dabc1ca292b93c373589b1827f01b404d0d66669f58c03b6d2f92a6e64f2c",
+				"dweb:/ipfs/QmP3yzaUfqUqb7qk4fBYw8U6rMgWsSgNKjSUGJncjwaHCq"
+			]
+		},
+		"@chainlink/contracts@1.1.0/src/v0.8/functions/v1_0_0/interfaces/IFunctionsClient.sol": {
+			"keccak256": "0x6117b82e7c4eec44ce557b0fc8bc1ac5f49e5d160ac6d4485452d6aafdd762ff",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://0e0828ef423afef9f6f709bb173a7e3991fe555bf9337a4941d65da525ac4ad3",
+				"dweb:/ipfs/QmXz1jHRZFTqdnNxP2tffVQ9NnUE1xgtBMRWuyUrTVY4pm"
+			]
+		},
+		"@chainlink/contracts@1.1.0/src/v0.8/functions/v1_0_0/interfaces/IFunctionsRouter.sol": {
+			"keccak256": "0x44db41e8ff90c2828ca0ada125abc4b411921a86514a4a047fd9fd43ba9d7e08",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://c4c3228edc2cff7c55301d3764e54cd7ada6af81ef9aadf8bc116a2c982523d6",
+				"dweb:/ipfs/QmXjJQgCu2gvX6QQJ9GC1gEoy3vrmpf1PiRPLqWqKddwRe"
+			]
+		},
+		"@chainlink/contracts@1.1.0/src/v0.8/functions/v1_0_0/libraries/FunctionsRequest.sol": {
+			"keccak256": "0xed75be0eaba358d468f1fe18adc377d5044f57eff0070081f884a1f212d0adc2",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://ea7c96e993b253723ed5461008c34b847d7b067221736068d45f029db4d92b0d",
+				"dweb:/ipfs/QmTMMXAWXeDgSChnToydej6e3p331KiJZT3S27ZiPkht9t"
+			]
+		},
+		"@chainlink/contracts@1.1.0/src/v0.8/functions/v1_0_0/libraries/FunctionsResponse.sol": {
+			"keccak256": "0xc72eb037effef32146f7cd4086af00f44f28c8649d891e5e404fec5fda7e802b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://eeeaeadc797b7656fd30201ab8c8ed24fe8fb3f83a480142bb55c7c7babb2b4b",
+				"dweb:/ipfs/Qmdb55a1iWJetog7qUpZ6FHKGSA8g3Vu68LGsXfqfec9k5"
+			]
+		},
 		"@chainlink/contracts@1.1.0/src/v0.8/shared/access/ConfirmedOwner.sol": {
 			"keccak256": "0xdcb0e9135ddbe71ee27ba99fa06656960c66c964cf2ecb29696da1c1427d9861",
 			"license": "MIT",
@@ -314,36 +472,28 @@
 				"dweb:/ipfs/QmNoBX8TY424bdQWyQC7y3kpKfgxyWxhLw7KEhhEEoBN9q"
 			]
 		},
-		"@chainlink/contracts@1.1.0/src/v0.8/shared/interfaces/LinkTokenInterface.sol": {
-			"keccak256": "0xac02fbc0c7d194e525a71f524d1f7c472df73e19c2b527d7b529badaeaf0ec51",
-			"license": "MIT",
+		"@chainlink/contracts@1.1.0/src/v0.8/vendor/@ensdomains/buffer/v0.1.0/Buffer.sol": {
+			"keccak256": "0x0d86b367813922094e02594a406ba89f5e97d3d74ec2ce3c4032566840e302b0",
+			"license": "BSD-2-Clause",
 			"urls": [
-				"bzz-raw://301fa881df623882941bdc7a807807df436c5c7da499fa1a4bbe490738109845",
-				"dweb:/ipfs/QmV2W4NYpe6uk4s34sCyrFJHfPEjYAkvHUposWkXrRNtbj"
+				"bzz-raw://2c65ceaef4ce70e8638275da75f4c384d4e404d588fcac404028da7e634c81a8",
+				"dweb:/ipfs/QmV3vMmjseNombFaRGw7K4PgDj6rrWcEzNY9S5jtLAdJqG"
 			]
 		},
-		"@chainlink/contracts@1.1.0/src/v0.8/vrf/VRFV2WrapperConsumerBase.sol": {
-			"keccak256": "0x97bc383acc97074b3b7d6f68da70dce617699f54e0ed1ddd0c83ec7f83a4f07f",
+		"@chainlink/contracts@1.1.0/src/v0.8/vendor/solidity-cborutils/v2.0.0/CBOR.sol": {
+			"keccak256": "0xdecf04203502670ac72ba466c75e4f87f4419907365005f0d73e7d07ee3e5715",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://09edfa8dc11decff67ccde43ccd803ed3cd3b9f020c69f2a4c5394591cd9b39f",
-				"dweb:/ipfs/QmUxFtDpXkYYQ6S2jDrnu9Md6F1guH4S14p5jt7pTDYUgv"
+				"bzz-raw://39c9937cf45f840cf3a45a83dec3719dbd2f1d71198088db48b909ec656f77dd",
+				"dweb:/ipfs/QmQx9mEREaFyJGC2KpqWBqBV712NY8vUBrcqTR4RdVNBiu"
 			]
 		},
-		"@chainlink/contracts@1.1.0/src/v0.8/vrf/interfaces/VRFV2WrapperInterface.sol": {
-			"keccak256": "0x44f6fa0cb1867a0bc137a195d4603bafa1cf74ecfbe69eb82a5dabeca8957738",
+		"StekcitBMFunctions.sol": {
+			"keccak256": "0xd99adfc4c2ca7a1248515b5d0c1740478899b5178daeb51dc8bdeb7fcd7fd8df",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://87ebb29c09566ab02ff62c3c29f60a08db52f032b5f2c5220cd111aad88002ce",
-				"dweb:/ipfs/QmfScq3oJ6MkPXJh5JUrpz93bNMJ3ebtLcE3Q1H2DUNi93"
-			]
-		},
-		"VRFv2DirectFundingConsumer.sol": {
-			"keccak256": "0xae74f1114e000eb15d0d6d5423d401b490e78e78d54146ee0bd1e55e8511448d",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://eab21b8d2c2a948595941cfa978e4fd5c8a884316e7985373ccf9fe196a7dd46",
-				"dweb:/ipfs/QmRqd8rxCvQgE9misKYWC23VUuED4tMDz78h41eticC5Xa"
+				"bzz-raw://fcf9c02b2d1dcb289bedc7da0c8f20dacd06af18fbcafaf58b3ba318519f07bc",
+				"dweb:/ipfs/QmcjtmzmSNxz3BY8obLiSWrDzAVcYdcaYsXLPoZha6XEvi"
 			]
 		}
 	},
