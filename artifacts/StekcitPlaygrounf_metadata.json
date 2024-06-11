@@ -1,0 +1,44 @@
+{
+	"compiler": {
+		"version": "0.8.26+commit.8a97fa7a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"StekcitPlayground.sol": "StekcitPlaygrounf"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"StekcitPlayground.sol": {
+			"keccak256": "0x12393cbdcb5d182098c42f0cd8edad408bfd31f3d6c22f4ec5536aba5b692229",
+			"urls": [
+				"bzz-raw://ce4b404d586be01939b2a4ad3664f3d37922e2b4a649e3dc98aa7d5c67a2bc7b",
+				"dweb:/ipfs/QmUkiz5mcPUxGyepHUwUSx6UKFQ5hKWn9U33C8WZeyh8Yp"
+			]
+		}
+	},
+	"version": 1
+}
