@@ -1,0 +1,265 @@
+{
+	"compiler": {
+		"version": "0.8.19+commit.7dd6d404"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "requestId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256[]",
+						"name": "randomWords",
+						"type": "uint256[]"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "payment",
+						"type": "uint256"
+					}
+				],
+				"name": "RequestFulfilled",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "requestId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint32",
+						"name": "numWords",
+						"type": "uint32"
+					}
+				],
+				"name": "RequestSent",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "allRandomWords",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_requestId",
+						"type": "uint256"
+					}
+				],
+				"name": "getRequestStatus",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "paid",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "fulfilled",
+						"type": "bool"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "randomWords",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "lastRequestId",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_requestId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "_randomWords",
+						"type": "uint256[]"
+					}
+				],
+				"name": "rawFulfillRandomWords",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "requestIds",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "requestRandomWords",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "requestId",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "s_requests",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "paid",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "fulfilled",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "withdrawLink",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"withdrawLink()": {
+					"notice": "Allow withdraw of Link tokens from the contract"
+				}
+			},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"StekcitBM.sol": "StekcitB"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"@chainlink/contracts@1.1.0/src/v0.8/shared/interfaces/LinkTokenInterface.sol": {
+			"keccak256": "0xac02fbc0c7d194e525a71f524d1f7c472df73e19c2b527d7b529badaeaf0ec51",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://301fa881df623882941bdc7a807807df436c5c7da499fa1a4bbe490738109845",
+				"dweb:/ipfs/QmV2W4NYpe6uk4s34sCyrFJHfPEjYAkvHUposWkXrRNtbj"
+			]
+		},
+		"@chainlink/contracts@1.1.0/src/v0.8/vrf/VRFV2WrapperConsumerBase.sol": {
+			"keccak256": "0x97bc383acc97074b3b7d6f68da70dce617699f54e0ed1ddd0c83ec7f83a4f07f",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://09edfa8dc11decff67ccde43ccd803ed3cd3b9f020c69f2a4c5394591cd9b39f",
+				"dweb:/ipfs/QmUxFtDpXkYYQ6S2jDrnu9Md6F1guH4S14p5jt7pTDYUgv"
+			]
+		},
+		"@chainlink/contracts@1.1.0/src/v0.8/vrf/interfaces/VRFV2WrapperInterface.sol": {
+			"keccak256": "0x44f6fa0cb1867a0bc137a195d4603bafa1cf74ecfbe69eb82a5dabeca8957738",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://87ebb29c09566ab02ff62c3c29f60a08db52f032b5f2c5220cd111aad88002ce",
+				"dweb:/ipfs/QmfScq3oJ6MkPXJh5JUrpz93bNMJ3ebtLcE3Q1H2DUNi93"
+			]
+		},
+		"StekcitBM.sol": {
+			"keccak256": "0x048f3a6faa81a5548ff9ace6d685b02559f585f669f72a2db4970dc3695b6b30",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://adbf58ee4626523f1608f569978c66a727e8e233c051d93340eca718ecbb99e3",
+				"dweb:/ipfs/QmVBXwd1yCwLR92iU11yXrPyPPxRYhKSwtBuMGmar5JDHR"
+			]
+		}
+	},
+	"version": 1
+}
